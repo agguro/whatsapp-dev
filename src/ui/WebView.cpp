@@ -243,7 +243,11 @@ namespace wfl::ui
                           "a.remove();"
                           "})();");
 
-            webkit_web_view_run_javascript(*this, script.c_str(), nullptr, nullptr, nullptr);
+            #if WEBKIT_CHECK_VERSION(2, 40, 0)
+               webkit_web_view_evaluate_javascript(*this, script.c_str(), -1, nullptr, nullptr, nullptr, nullptr, nullptr);
+            #else
+               webkit_web_view_run_javascript(*this, script.c_str(), nullptr, nullptr, nullptr);
+            #endif
         }
         else
         {
